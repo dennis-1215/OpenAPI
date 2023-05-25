@@ -4,16 +4,18 @@ import xml.etree.ElementTree as ET
 import requests
 
 class Search:
-    def __init__(self):
+    def __init__(self, keyword, typeid):
         self.window = Tk()
         self.window.title('검색 결과')
         # self.window.configure(bg='light gray')
         fontstyle = font.Font(self.window, size=30)
         self.frame = Frame(self.window)
         self.frame.pack()
+
         Label(self.frame, text="관광지 검색 결과", font=fontstyle).pack(side=LEFT)
         Button(self.frame, text='뒤로가기', width=10, height=2,command=self.back).pack(side=RIGHT)
-        self.InitListbox()
+
+        self.InitListbox()  # 리스트 박스생성
         self.window.mainloop()
     def back(self):
         pass
@@ -29,4 +31,4 @@ class Search:
         scrollbar.config(command=self.Listbox.yview)
 
 
-Search()
+Search(0, 0)    # 인자는 keyword(검색), typeid(관광 시설 구분 코드)
