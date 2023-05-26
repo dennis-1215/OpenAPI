@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import font
 import xml.etree.ElementTree as ET
 import requests
+from search import *
 
 # 공공데이터 API 키
 api_key = ""
@@ -12,15 +13,19 @@ api_detail = "detailCommon1"
 api_image = "detailImage1"
 
 class MainGUI:
-    def __init__(self):
+    def __init__(self, keyword= ""):
         self.content_List = ["관광지", "문화시설", "레포츠", "숙박", "쇼핑", "음식점"]
         self.content_colors = ["pink", "cyan", "antique white", "cornflower blue", "medium spring green", "purple"]
         self.fileName = ["tour.png", "culture.png", "leports.png", "hotel.png", "shopping.png", "restaurant.png"]
         self.buttonIamges = []
         self.InitMain()
-
+        self.keyword = keyword
     def SearchPage(self, case):
-        print(self.content_List[case])
+        typeids = [12, 14, 28, 32, 38, 39]
+        if self.keyword == "":
+            return None
+        self.root.destroy()
+        Search(self.keyword, typeids[case], self.content_List[case])
 
     def InitMain(self):
         self.root = Tk()
@@ -142,8 +147,8 @@ class MainGUI:
             self.canvas.create_text(x0 - 40, y1 + bar_width / 2, text=content_names[i], anchor='s')
             self.canvas.create_text(x1 + 10, y1 + bar_width / 2, text=content_values[i], anchor='s')
 
-
-MainGUI()
+if __name__ == "__main":
+    MainGUI()
 
 
 
