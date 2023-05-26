@@ -5,7 +5,7 @@ import requests
 import main
 
 class Search:
-    def __init__(self, keyword, typeid, content):
+    def __init__(self, keyword, typeid, content = '관광'):
         self.window = Tk()
         self.window.title('검색 결과')
         self.window.geometry("600x800")
@@ -16,11 +16,9 @@ class Search:
 
         # self.window.configure(bg='light gray')
         fontstyle = font.Font(self.window, size=30)
-        self.frame = Frame(self.window)
-        self.frame.pack()
 
-        Label(self.frame, text=self.content + " 검색 결과", font=fontstyle).pack(side=LEFT)
-        Button(self.frame, text='뒤로가기', width=10, height=2,command=self.back).pack(side=RIGHT)
+        Label(self.window, text=self.content + " 검색 결과", font=fontstyle).place(x=0, y=0)
+        Button(self.window, text='뒤로가기', width=10, height=2,command=self.back).place(x=500, y=0)
 
         self.GetXML()
         self.InitListbox()  # 리스트 박스생성
@@ -29,10 +27,10 @@ class Search:
         pass
     def InitListbox(self):
         self.frame_list = Frame(self.window)
-        self.frame_list.pack()
+        self.frame_list.place(x=10, y=100)
         scrollbar = Scrollbar(self.frame_list)
         scrollbar.pack(side=RIGHT,fill='y')
-        self.Listbox = Listbox(self.frame_list, width=50,height=20, yscrollcommand=scrollbar.set)
+        self.Listbox = Listbox(self.frame_list, width=80,height=40, yscrollcommand=scrollbar.set)
         self.Listbox.pack()
         for i in range(len(self.contentList)):
             self.Listbox.insert(END,str(i))
@@ -69,4 +67,4 @@ class Search:
 
 
 if __name__ == "__main__":
-    Search(0, 0, 0)    # 인자는 keyword(검색), typeid(관광 시설 구분 코드)
+    Search(0, 0)    # 인자는 keyword(검색), typeid(관광 시설 구분 코드)
