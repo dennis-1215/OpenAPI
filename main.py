@@ -5,7 +5,7 @@ import requests
 from search import *
 
 # 공공데이터 API 키
-api_key = ""
+api_key = "FY7EEMN2XjyyDAaIDkLDvSUP1oMLoUsDPDd+EmzrNf/fB6r2A4hrTNwXRG4XgVEKcyFa7KrwJHHG83ohTl/81g=="
 url = "http://apis.data.go.kr/B551011/KorService1/"
 api_keyword = "searchKeyword1"
 api_location = "locationBasedList1"
@@ -147,7 +147,7 @@ class MainGUI:
             self.canvas.create_text(x0 - 40, y1 + bar_width / 2, text=content_names[i], anchor='s')
             self.canvas.create_text(x1 + 10, y1 + bar_width / 2, text=content_values[i], anchor='s')
 
-if __name__ == "__main":
+if __name__ == "__main__":
     MainGUI()
 
 
