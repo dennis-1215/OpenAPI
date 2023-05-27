@@ -5,7 +5,7 @@ import requests
 from search import *
 
 # 공공데이터 API 키
-api_key = "FY7EEMN2XjyyDAaIDkLDvSUP1oMLoUsDPDd+EmzrNf/fB6r2A4hrTNwXRG4XgVEKcyFa7KrwJHHG83ohTl/81g=="
+api_key = ''
 url = "http://apis.data.go.kr/B551011/KorService1/"
 api_keyword = "searchKeyword1"
 api_location = "locationBasedList1"
