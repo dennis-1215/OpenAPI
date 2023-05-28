@@ -28,7 +28,11 @@ class Search:
         self.window.mainloop()
 
     def back(self):
-        pass
+        self.window.destroy()
+        main.MainGUI()
+    def test(self, none):
+        print(none)
+
     def InitListbox(self):
         self.photo_list = []  # 사진 들어갈것
         self.frame_list = Frame(self.window)
@@ -47,8 +51,9 @@ class Search:
                 with urllib.request.urlopen(self.contentList[i]['imageUrl']) as u:
                     raw_data = u.read()
                 im = Image.open(BytesIO(raw_data))
-                im = im.resize((200, 200))
+                im = im.resize((150, 150))
                 photo = ImageTk.PhotoImage(im)      # url 받아서 이미지화 하는 과정들 (교수님 예시보고 따라함)
+
                 self.photo_list.append(photo)       # photo_list로 저장해놔야 사진들이 다 나옴
                 self.treeview.insert('', 'end', image=self.photo_list[-1], text=self.contentList[i]['name'])    # 만들어둔 treeview 객체에 인서트
             else:
@@ -59,6 +64,8 @@ class Search:
         self.treeview.configure(height=3)               # 그랬더니 Treeview 위젯의 높이가 행높이에 곱해져서 위젯 자체의 높이를 줄임
 
         scrollbar.config(command=self.treeview.yview)   # 이건 스크롤 관련
+        self.treeview.bind('<ButtonRelease-1>', self.test)
+
 
     def GetXML(self):
         self.keyword_params = {

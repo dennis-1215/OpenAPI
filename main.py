@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import font
 import xml.etree.ElementTree as ET
 import requests
-from search import *
+import search
 
 # 공공데이터 API 키
 api_key = ''
@@ -25,7 +25,10 @@ class MainGUI:
         if self.keyword == "":
             return None
         self.root.destroy()
-        Search(self.keyword, typeids[case], self.content_List[case])
+        search.Search(self.keyword, typeids[case], self.content_List[case])
+
+    def FavoritePage(self):
+        print("Favorite Page")
 
     def InitMain(self):
         self.root = Tk()
@@ -58,11 +61,18 @@ class MainGUI:
 
         # 버튼
         self.buttons = []
+
+        for i in range(6):
+            self.buttonIamges.append(PhotoImage(file="icon/"+self.fileName[i]))
+            self.buttonIamges[i] = self.buttonIamges[i]
+
         for i in range(6):
             self.buttons.append(
-                Button(self.frame3, text=self.content_List[i], width=6, height=4, font= self.main_font,
+                Button(self.frame3, image=self.buttonIamges[i], width=80, height=80, bg=self.content_colors[i],
                        command=lambda case=i: self.SearchPage(case)).place(x=i * 95, y=10))
 
+        self.buttons.append(Button(self.frame3, text="즐겨찾기", bg="yellow", width=45, height=2, font=self.main_font,
+                       command=self.FavoritePage).place(x=3, y=120))
 
         self.GetXML("")
 
