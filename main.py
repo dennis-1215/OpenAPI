@@ -6,7 +6,7 @@ import search
 import favorite
 
 # 공공데이터 API 키
-api_key = ''
+api_key = 'FY7EEMN2XjyyDAaIDkLDvSUP1oMLoUsDPDd+EmzrNf/fB6r2A4hrTNwXRG4XgVEKcyFa7KrwJHHG83ohTl/81g=='
 url = "http://apis.data.go.kr/B551011/KorService1/"
 api_keyword = "searchKeyword1"
 api_location = "locationBasedList1"
@@ -14,7 +14,7 @@ api_detail = "detailCommon1"
 api_image = "detailImage1"
 
 class MainGUI:
-    def __init__(self, keyword= ""):
+    def __init__(self, keyword=""):
         self.content_List = ["관광지", "문화시설", "레포츠", "숙박", "쇼핑", "음식점"]
         self.content_colors = ["pink", "cyan", "antique white", "cornflower blue", "medium spring green", "purple"]
         self.fileName = ["tour.png", "culture.png", "leports.png", "hotel.png", "shopping.png", "restaurant.png"]
