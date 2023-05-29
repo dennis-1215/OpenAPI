@@ -3,6 +3,7 @@ from tkinter import font
 import xml.etree.ElementTree as ET
 import requests
 import search
+import favorite
 
 # 공공데이터 API 키
 api_key = ''
@@ -28,7 +29,8 @@ class MainGUI:
         search.Search(self.keyword, typeids[case], self.content_List[case])
 
     def FavoritePage(self):
-        print("Favorite Page")
+        self.root.destroy()
+        favorite.Favorite()
 
     def InitMain(self):
         self.root = Tk()
