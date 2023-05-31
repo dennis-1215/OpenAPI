@@ -52,10 +52,10 @@ class Search:
         selectedItem = self.treeview.selection()
         print(selectedItem)
 
-    def InitListbox(self):
+    def InitListbox(self, frame):
         self.photo_list = []  # 사진 들어갈것
         self.photo_inform = []
-        self.frame_list = Frame(self.window)
+        self.frame_list = Frame(frame)
         self.frame_list.place(x=10, y=100)
 
         scrollbar = Scrollbar(self.frame_list)  # 스크롤 바 만듬
