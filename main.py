@@ -72,10 +72,7 @@ class MainGUI:
 
         self.tapList = []
 
-        self.canvasFrame = Label(self.root)
-        self.tapList.append(self.canvasFrame)
-        self.frame3.add(self.canvasFrame, image=self.buttonIamges[0])
-        for i in range(1, 8):
+        for i in range(0, 8):
             self.tapList.append(Label(self.root))
             self.frame3.add(self.tapList[i], image=self.buttonIamges[i])
 
@@ -153,8 +150,8 @@ class MainGUI:
 
 
     def DrawGraph(self):
-        Label(self.canvasFrame, text=self.keyword + " 검색 결과", font=self.font_16_B).place(x=200, y=0)
-        self.canvas = Canvas(self.canvasFrame, width=500, height=500, bg='white')
+        Label(self.tapList[0], text=self.keyword + " 검색 결과", font=self.font_16_B).place(x=200, y=0)
+        self.canvas = Canvas(self.tapList[0], width=500, height=500, bg='white')
         self.canvas.place(x=20, y=50)
         # 그래프 막대 그리기
         max_content_count = max(self.content_count.values())
@@ -172,62 +169,61 @@ class MainGUI:
             self.canvas.create_text(x0 - 40, y1 + bar_width / 2, text=content_names[i], anchor='s')
             self.canvas.create_text(x1 + 10, y1 + bar_width / 2, text=content_values[i], anchor='s')
 
+
+        self.InitListbox()
+        self.makeList()
+
+    def InitListbox(self):
+        self.treeviews = []
         for i in range(1, 8):
-            self.InitListbox(self.tapList[i], i)
-    def InitListbox(self, frame, num):
-        self.photo_list = []  # 사진 들어갈것
-        self.photo_inform = []
-        if num == 7:
-            Label(frame, text="즐겨찾기 목록", font=self.font_16_B).place(x=0,y=0)
-        else:
-            Label(frame, text=self.content_List[num-1]+" 검색 결과", font=self.font_16_B).place(x=0,y=0)
+            if not i == 7:
+                Label(self.tapList[i], text=self.content_List[i-1]+" 검색 결과", font=self.font_16_B).place(x=0, y=0)
+            else:
+                Label(self.tapList[i], text="즐겨찾기 목록", font=self.font_16_B).place(x=0, y=0)
 
-        self.frame_list = Frame(frame)
-        self.frame_list.place(x=10, y=50)
 
-        scrollbar = Scrollbar(self.frame_list)  # 스크롤 바 만듬
-        scrollbar.pack(side=RIGHT, fill='y')    # 스크롤 바 팩
+            self.frame_list = Frame(self.tapList[i])
+            self.frame_list.place(x=10, y=50)
 
-        self.treeview = ttk.Treeview(self.frame_list, columns=('A'),yscrollcommand=scrollbar.set) # Treeview위젯 생성
-        self.treeview.pack()
+            scrollbar = Scrollbar(self.frame_list)  # 스크롤 바 만듬
+            scrollbar.pack(side=RIGHT, fill='y')    # 스크롤 바 팩
 
-        self.treeview.column('#0', width=200)   # 첫번째 열(이게 아마 디폴트 열인듯?) 너비를 550으로 설정
-        self.treeview.column('A', anchor='center', width=350)
+
+            self.treeview = ttk.Treeview(self.frame_list, columns=('A'),yscrollcommand=scrollbar.set) # Treeview위젯 생성
+            self.treeview.pack()
+
+            self.treeview.column('#0', width=40)   # 첫번째 열(이게 아마 디폴트 열인듯?) 너비를 550으로 설정
+            self.treeview.heading('#0', text='번호')
+
+            self.treeview.column('A', anchor='center', width=500)
+            self.treeview.heading('A', text='이름', anchor='center')
+
+            self.treeviews.append(self.treeview)
+            scrollbar.config(command=self.treeview.yview)  # 이건 스크롤 관련
+
         # type(self.tourLists[0]['name'])
 
-        img = Image.open('존재하지 않는 이미지.png')
-        none_image_s = ImageTk.PhotoImage(img.resize((150,150)))
-        none_image_i = ImageTk.PhotoImage(img)
 
 
-        if num != 7:
-            for i in range(len(self.tourLists)):
-                print("nowid :", self.tourLists[i]['typeid'])
-                print("typeids : ", self.typeids[num-1])
-                if self.tourLists[i]['typeid'] == str(self.typeids[num-1]):
-                    print("         correct!")
-                    if self.tourLists[i]['imageUrl'] != '':   # 만약 이미지가 있다면
-                        with urllib.request.urlopen(self.tourLists[i]['imageUrl']) as u:
-                            raw_data = u.read()
-                        im = Image.open(BytesIO(raw_data))
-                        im = im.resize((150, 150))
-                        photo = ImageTk.PhotoImage(im)      # url 받아서 이미지화 하는 과정들 (교수님 예시보고 따라함)
-                        self.photo_list.append(photo)       # photo_list로 저장해놔야 사진들이 다 나옴
-                        im = im.resize((300, 300))
-                        photo = ImageTk.PhotoImage(im)
-                        self.photo_inform.append(photo)
-                        self.treeview.insert('', 'end', image=self.photo_list[-1], values=(self.tourLists[i]['name'].replace(' ', '\ ')), iid=i)    # 만들어둔 treeview 객체에 인서트
-                    else:
-                        self.photo_inform.append(none_image_i)
-                        self.photo_list.append(none_image_s)
-                        self.treeview.insert('', 'end', image=self.photo_list[-1], values=(self.tourLists[i]['name'].replace(' ', '\ ')), iid=i) # 사진이 없으면 그냥 공백넣기
-                    print(self.tourLists[i]['name'])          # 이건 이름이 잘 안나오길래 이름 잘 불러왔나 테스트한거
-                style = ttk.Style()                             # Treeview 내부의 행들 높이 설정해 줄려고 만듬
-                style.configure('Treeview', rowheight=200)      # 행의 높이 크기 늘려줌 (원래 글자만 들어갈 정도로 작았음)
-                self.treeview.configure(height=3)               # 그랬더니 Treeview 위젯의 높이가 행높이에 곱해져서 위젯 자체의 높이를 줄임
+    def makeList(self):
+        content_count = {
+            "12": 0,
+            "14": 0,
+            "28": 0,
+            "32": 0,
+            "38": 0,
+            "39": 0
+        }
+        tapList = [12, 14, 28, 32, 38, 39]
+        for i in range(len(self.tourLists)):
+            if int(self.tourLists[i]['typeid']) in self.typeids:
+                content_count[self.tourLists[i]['typeid']] += 1
+                self.treeviews[tapList.index(int(self.tourLists[i]['typeid']))].insert('', 'end', text=content_count[self.tourLists[i]['typeid']], values=(self.tourLists[i]['name'].replace(' ', '\ ')), iid=i)
+                print(self.tourLists[i]['name'])          # 이건 이름이 잘 안나오길래 이름 잘 불러왔나 테스트한거
+            style = ttk.Style()                             # Treeview 내부의 행들 높이 설정해 줄려고 만듬
+            style.configure('Treeview', rowheight=20)      # 행의 높이 크기 늘려줌 (원래 글자만 들어갈 정도로 작았음)
 
-                scrollbar.config(command=self.treeview.yview)   # 이건 스크롤 관련
-                #self.treeview.bind('<ButtonRelease-1>', self.Information)
+            #self.treeview.bind('<ButtonRelease-1>', self.Information)
 
 if __name__ == "__main__":
     MainGUI()
