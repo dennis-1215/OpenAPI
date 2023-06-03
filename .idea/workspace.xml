@@ -6,6 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="d34cf87b-0c2e-4712-a3d2-09f0fbbb8d90" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icon/culture.png" beforeDir="false" afterPath="$PROJECT_DIR$/icon/culture.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icon/graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/icon/graph.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icon/hotel.png" beforeDir="false" afterPath="$PROJECT_DIR$/icon/hotel.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icon/leports.png" beforeDir="false" afterPath="$PROJECT_DIR$/icon/leports.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icon/restaurant.png" beforeDir="false" afterPath="$PROJECT_DIR$/icon/restaurant.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icon/shopping.png" beforeDir="false" afterPath="$PROJECT_DIR$/icon/shopping.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icon/star.png" beforeDir="false" afterPath="$PROJECT_DIR$/icon/star.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icon/tour.png" beforeDir="false" afterPath="$PROJECT_DIR$/icon/tour.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/information.py" beforeDir="false" afterPath="$PROJECT_DIR$/information.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

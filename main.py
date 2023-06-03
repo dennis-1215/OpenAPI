@@ -6,6 +6,8 @@ from PIL import Image, ImageTk
 import urllib.request
 from io import BytesIO
 import requests
+
+import information
 import search
 import favorite
 
@@ -27,16 +29,6 @@ class MainGUI:
         self.buttonIamges = []
         self.InitMain()
         self.keyword = keyword
-
-    def SearchPage(self, case):
-        if self.keyword == "":
-            return None
-        self.root.destroy()
-        search.Search(self.keyword, self.typeids[case], self.content_List[case])
-
-    def FavoritePage(self):
-        self.root.destroy()
-        favorite.Favorite()
 
     def InitMain(self):
         self.root = Tk()
@@ -75,15 +67,6 @@ class MainGUI:
         for i in range(0, 8):
             self.tapList.append(Label(self.root))
             self.frame3.add(self.tapList[i], image=self.buttonIamges[i])
-
-
-        # for i in range(6):
-        #     self.buttons.append(
-        #         Button(self.frame3, image=self.buttonIamges[i], width=80, height=80, bg=self.content_colors[i],
-        #                command=lambda case=i: self.SearchPage(case)).place(x=i * 95, y=10))
-
-        # self.buttons.append(Button(self.frame3, text="즐겨찾기", bg="yellow", width=45, height=2, font=self.main_font,
-        #                command=self.FavoritePage).place(x=3, y=120))
 
         self.GetXML("")
 
@@ -189,21 +172,26 @@ class MainGUI:
             scrollbar.pack(side=RIGHT, fill='y')    # 스크롤 바 팩
 
 
-            self.treeview = ttk.Treeview(self.frame_list, columns=('A'),yscrollcommand=scrollbar.set) # Treeview위젯 생성
+            self.treeview = ttk.Treeview(self.frame_list, height=25 ,columns=('A'),yscrollcommand=scrollbar.set) # Treeview위젯 생성
             self.treeview.pack()
 
             self.treeview.column('#0', width=40)   # 첫번째 열(이게 아마 디폴트 열인듯?) 너비를 550으로 설정
             self.treeview.heading('#0', text='번호')
 
-            self.treeview.column('A', anchor='center', width=500)
+            self.treeview.column('A', anchor='center', width=470)
             self.treeview.heading('A', text='이름', anchor='center')
 
             self.treeviews.append(self.treeview)
             scrollbar.config(command=self.treeview.yview)  # 이건 스크롤 관련
+            self.treeview.bind('<Double-Button-1>', self.Information)
 
         # type(self.tourLists[0]['name'])
 
-
+    def Information(self, event):
+        tab_index = self.frame3.index("current")
+        selectedItem = self.treeviews[tab_index - 1].selection()
+        index = int(selectedItem[0])
+        information.Information(self.tourLists[index]['contentid'])
 
     def makeList(self):
         content_count = {
