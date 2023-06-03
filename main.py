@@ -88,7 +88,6 @@ class MainGUI:
         response = requests.get(url + api_keyword, params=self.keyword_params)
         root = ET.fromstring(response.content)
         items = root.findall(".//item")
-
         self.tourLists = []
 
         for item in items:
@@ -103,6 +102,7 @@ class MainGUI:
                 "contentid": item.findtext("contentid"),  # 시설 고유 코드
                 "imageUrl": item.findtext("firstimage")  # 이미지 url
             }
+            #print(self.tour)
             self.tourLists.append(self.tour)
 
         self.content_count = {
@@ -207,7 +207,6 @@ class MainGUI:
             if int(self.tourLists[i]['typeid']) in self.typeids:
                 content_count[self.tourLists[i]['typeid']] += 1
                 self.treeviews[tapList.index(int(self.tourLists[i]['typeid']))].insert('', 'end', text=content_count[self.tourLists[i]['typeid']], values=(self.tourLists[i]['name'].replace(' ', '\ ')), iid=i)
-                print(self.tourLists[i]['name'])          # 이건 이름이 잘 안나오길래 이름 잘 불러왔나 테스트한거
             style = ttk.Style()                             # Treeview 내부의 행들 높이 설정해 줄려고 만듬
             style.configure('Treeview', rowheight=20)      # 행의 높이 크기 늘려줌 (원래 글자만 들어갈 정도로 작았음)
 
