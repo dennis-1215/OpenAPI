@@ -6,7 +6,6 @@ from PIL import Image, ImageTk
 import urllib.request
 from io import BytesIO
 import requests
-
 import information
 import search
 import favorite
