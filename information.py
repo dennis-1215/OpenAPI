@@ -57,10 +57,10 @@ class Information:
         # 이미지 라벨에 올리기
         Label(self.window, bg='white', height=300, width=300, image=map_photo).place(x=300, y=97)
 
-
+        modifieddate = self.detail['modifiedtime']
+        modidate = modifieddate[:4] + '/' + modifieddate[4:6] + '/' + modifieddate[6:8]
         self.texts = scrolledtext.ScrolledText(self.window, width=53, height=9, font=fontstyle2, bg='white')
-        self.texts.insert(END, '이름 : ' +self.detail['name']+'\n\n주소: '+self.detail['address']+'\n\n경도 : '
-                          + self.detail['mapx']+'\n\n위도 : '+ self.detail['mapy']
+        self.texts.insert(END, '\t\t\t     최근 수정된 날짜 : ' + modidate +'\n이름 : ' +self.detail['name']+'\n\n주소: '+self.detail['address']
                           + '\n\n상세설명 : ' + self.detail['description'])
         self.texts.configure(state='disabled')
         self.texts.place(x=0, y=400)
