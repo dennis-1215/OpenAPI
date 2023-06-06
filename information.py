@@ -9,6 +9,8 @@ from PIL import Image, ImageTk
 import urllib.request
 from io import BytesIO
 
+bookmarks = []
+
 class Information:
     def __init__(self, contentID):
         self.window = Toplevel()
@@ -96,10 +98,6 @@ class Information:
                 "modifiedtime": item.findtext("modifiedtime")
             }
 
-        self.PrintDetail()
-    def PrintDetail(self):
-        self.label.configure(text=str(self.detail["name"]))
-
     def back(self):
         self.window.destroy()
 
@@ -107,6 +105,8 @@ class Information:
         if self.bookmark['text'] == 'off':
             self.bookmark['image'] = self.markon
             self.bookmark['text'] = 'on'
+            bookmarks.append([self.detail["contentid"], self.detail['name']])
+
         else:
             self.bookmark['text'] = 'off'
             self.bookmark['image'] = self.markoff

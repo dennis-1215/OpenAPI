@@ -10,6 +10,15 @@ import information
 import search
 import favorite
 
+''' C / C++ 연동 즐겨찾기 파일로 저장하는 함수
+spam.fileOut(self.detail["contentid"], self.detail['name'], self.detail['address'])
+나중에 즐겨찾기 목록 불러오기 추가할 예정
+인자로는 id랑 이름만 받도록 수정할 예정
+
+spam.fileOut(id, 이름)
+spam.fileIn 추가 예정(id, 이름 불러오기)
+'''
+
 # 공공데이터 API 키
 api_key = 'FY7EEMN2XjyyDAaIDkLDvSUP1oMLoUsDPDd+EmzrNf/fB6r2A4hrTNwXRG4XgVEKcyFa7KrwJHHG83ohTl/81g=='
 url = "http://apis.data.go.kr/B551011/KorService1/"
@@ -26,6 +35,7 @@ class MainGUI:
         self.content_colors = ["pink", "cyan", "antique white", "cornflower blue", "medium spring green", "purple"]
         self.fileName = ["graph.png", "tour.png", "culture.png", "leports.png", "hotel.png", "shopping.png", "restaurant.png", "star.png"]
         self.buttonIamges = []
+        self.bookmarks = []
         self.InitMain()
         self.keyword = keyword
 
@@ -62,15 +72,20 @@ class MainGUI:
             self.buttonIamges.append(PhotoImage(file="icon/" + self.fileName[i]))
 
         self.tapList = []
-
         for i in range(0, 8):
             self.tapList.append(Label(self.root))
             self.frame3.add(self.tapList[i], image=self.buttonIamges[i])
 
         self.GetXML("")
-
+        self.frame3.bind('<<NotebookTabChanged>>', self.refresh)
         self.entry_search.bind("<Return>", self.GetXML)
         self.root.mainloop()
+
+
+    def refresh(self, event):
+        num = str(self.frame3.index(self.frame3.select()))
+        if num == '7':
+            self.favoriteList()
 
     def GetXML(self, str):
         self.frame3.select(0)
@@ -154,6 +169,7 @@ class MainGUI:
 
         self.InitListbox()
         self.makeList()
+        self.favoriteList()
 
     def InitListbox(self):
         self.treeviews = []
@@ -209,7 +225,13 @@ class MainGUI:
             style = ttk.Style()                             # Treeview 내부의 행들 높이 설정해 줄려고 만듬
             style.configure('Treeview', rowheight=20)      # 행의 높이 크기 늘려줌 (원래 글자만 들어갈 정도로 작았음)
 
-            #self.treeview.bind('<ButtonRelease-1>', self.Information)
+    def favoriteList(self):
+        self.treeviews[6].delete(*self.treeviews[6].get_children())
+        for i in range(len(information.bookmarks)):
+            self.treeviews[6].insert('', 'end', text=i, values=(information.bookmarks[i][1].replace(' ', '\ ')), iid=i)
+            style = ttk.Style()                             # Treeview 내부의 행들 높이 설정해 줄려고 만듬
+            style.configure('Treeview', rowheight=20)      # 행의 높이 크기 늘려줌 (원래 글자만 들어갈 정도로 작았음)
+
 
 if __name__ == "__main__":
     MainGUI()
