@@ -11,6 +11,7 @@ from io import BytesIO
 import spam
 
 bookmarks = spam.fileIn()
+print(bookmarks)
 class Information:
     def __init__(self, contentID):
         self.window = Toplevel()
@@ -105,6 +106,9 @@ class Information:
         if self.bookmark['text'] == 'off':
             self.bookmark['image'] = self.markon
             self.bookmark['text'] = 'on'
+            for bookmark in bookmarks:
+                if self.detail['contentid'] in bookmark:
+                    return
             bookmarks.append([self.detail["contentid"], self.detail['name']])
 
         else:
