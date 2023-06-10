@@ -202,7 +202,10 @@ class MainGUI:
         tab_index = self.frame3.index("current")
         selectedItem = self.treeviews[tab_index - 1].selection()
         index = int(selectedItem[0])
-        information.Information(self.tourLists[index]['contentid'])
+        if tab_index == 7:
+            information.Information(information.bookmarks[index][0])
+        else:
+            information.Information(self.tourLists[index]['contentid'])
 
     def makeList(self):
         content_count = {

@@ -99,6 +99,11 @@ class Information:
                 "modifiedtime": item.findtext("modifiedtime")
             }
 
+        for bookmark in bookmarks:
+            if self.detail['contentid'] in bookmark:
+                self.bookmark.configure(text="on")
+                self.bookmark['image'] = self.markon
+
     def back(self):
         self.window.destroy()
 
