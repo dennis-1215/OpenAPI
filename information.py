@@ -11,7 +11,6 @@ from io import BytesIO
 import spam
 
 bookmarks = spam.fileIn()
-print(bookmarks)
 class Information:
     def __init__(self, contentID):
         self.window = Toplevel()
@@ -115,10 +114,12 @@ class Information:
                 if self.detail['contentid'] in bookmark:
                     return
             bookmarks.append([self.detail["contentid"], self.detail['name']])
-
         else:
             self.bookmark['text'] = 'off'
             self.bookmark['image'] = self.markoff
+            for bookmark in bookmarks:
+                if self.detail['contentid'] in bookmark:
+                    bookmarks.pop(bookmarks.index(bookmark))
     def googlemap(self):    # API키 깃허브 안올라가게 조심
         self.map_url = f"https://maps.googleapis.com/maps/api/staticmap?center={self.detail['mapy']},{self.detail['mapx']}&zoom={self.zoom}&size=400x400&maptype=roadmap"
         mapy, mapx = self.detail['mapy'], self.detail['mapx']
