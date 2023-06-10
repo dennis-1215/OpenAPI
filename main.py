@@ -1,3 +1,4 @@
+import spam
 from tkinter import *
 from tkinter import font
 from tkinter import ttk
@@ -9,15 +10,6 @@ import requests
 import information
 import search
 import favorite
-
-''' C / C++ 연동 즐겨찾기 파일로 저장하는 함수
-spam.fileOut(self.detail["contentid"], self.detail['name'], self.detail['address'])
-나중에 즐겨찾기 목록 불러오기 추가할 예정
-인자로는 id랑 이름만 받도록 수정할 예정
-
-spam.fileOut(id, 이름)
-spam.fileIn 추가 예정(id, 이름 불러오기)
-'''
 
 # 공공데이터 API 키
 api_key = 'FY7EEMN2XjyyDAaIDkLDvSUP1oMLoUsDPDd+EmzrNf/fB6r2A4hrTNwXRG4XgVEKcyFa7KrwJHHG83ohTl/81g=='
@@ -57,10 +49,6 @@ class MainGUI:
         self.entry_search = Entry(self.frame1, width=30, font=self.main_fontB)
         self.label_search.pack(side=LEFT)
         self.entry_search.pack()
-
-        # frame3 : 버튼 5개
-        # self.frame3 = Frame(self.root, width=600, height=200)
-        # self.frame3.place(x=20, y=580)
 
         self.frame3 = ttk.Notebook(self.root, width=500, height=600)
         self.frame3.place(x=20, y=80)
@@ -231,7 +219,6 @@ class MainGUI:
             self.treeviews[6].insert('', 'end', text=i, values=(information.bookmarks[i][1].replace(' ', '\ ')), iid=i)
             style = ttk.Style()                             # Treeview 내부의 행들 높이 설정해 줄려고 만듬
             style.configure('Treeview', rowheight=20)      # 행의 높이 크기 늘려줌 (원래 글자만 들어갈 정도로 작았음)
-
-
+            spam.fileOut(information.bookmarks)
 if __name__ == "__main__":
     MainGUI()

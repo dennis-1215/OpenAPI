@@ -8,9 +8,9 @@ import main
 from PIL import Image, ImageTk
 import urllib.request
 from io import BytesIO
+import spam
 
-bookmarks = []
-
+bookmarks = spam.fileIn()
 class Information:
     def __init__(self, contentID):
         self.window = Toplevel()
