@@ -8,8 +8,11 @@ import urllib.request
 from io import BytesIO
 import requests
 import information
-import search
-import favorite
+
+import telegram
+import telepot
+import traceback
+import sys
 
 # 공공데이터 API 키
 api_key = 'FY7EEMN2XjyyDAaIDkLDvSUP1oMLoUsDPDd+EmzrNf/fB6r2A4hrTNwXRG4XgVEKcyFa7KrwJHHG83ohTl/81g=='
@@ -18,7 +21,7 @@ api_keyword = "searchKeyword1"
 api_location = "locationBasedList1"
 api_detail = "detailCommon1"
 api_image = "detailImage1"
-
+Token = '5678991003:AAHpwO6nAN-js9w7VMolfCG5mvFUAH1umIg'
 
 class MainGUI:
     def __init__(self, keyword=""):
@@ -67,6 +70,11 @@ class MainGUI:
         self.GetXML("")
         self.frame3.bind('<<NotebookTabChanged>>', self.refresh)
         self.entry_search.bind("<Return>", self.GetXML)
+
+        self.bot = telepot.Bot(Token)
+
+        self.bot.message_loop(self.handle)
+
         self.root.mainloop()
 
 
@@ -220,5 +228,35 @@ class MainGUI:
             style = ttk.Style()                             # Treeview 내부의 행들 높이 설정해 줄려고 만듬
             style.configure('Treeview', rowheight=20)      # 행의 높이 크기 늘려줌 (원래 글자만 들어갈 정도로 작았음)
             spam.fileOut(information.bookmarks)
+    def handle(self, msg):
+        content_type, chat_type, chat_id = telepot.glance(msg)
+        if content_type != 'text':
+            self.sendMessage(chat_id, '난 텍스트 이외의 메시지는 처리하지 못해요.')
+            return
+        text = msg['text']
+        args = text.split(' ')
+        if text.startswith('검색') and len(args)>1:
+            self.replyAptData(args[1], chat_id, args[2])
+        else:
+            self.sendMessage(chat_id, '모르는 명령어 입니다.\n검색 [이름] [관광지종류] 로 입력해 주십시요\n(관광지 종류 : 관광지, 문화시설, 레포츠, 숙박, 쇼핑, 음식점)')
+
+    def replyAptData(self, title, user ,key):
+        res_list = telegram.GetData(title, key)
+        msg = ''
+        for r in res_list:
+            if len(r+msg)+1 > 300:
+                self.sendMessage(user, msg)
+                msg = r+'\n'
+            else:
+                msg += r+'\n'
+        if msg:
+            self.sendMessage(user, msg)
+        else:
+            self.sendMessage(user, '해당 이름이나 관광지 종류에 존재하는 데이터가 없습니다.')
+    def sendMessage(self, user, msg):
+        try:
+            self.bot.sendMessage(user, msg)
+        except:
+            traceback.print_exc(file=sys.stdout)
 if __name__ == "__main__":
     MainGUI()
