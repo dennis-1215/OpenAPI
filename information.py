@@ -16,8 +16,8 @@ class Information:
         self.window = Toplevel()
         self.window.title('상세정보')
         self.window.geometry("610x600")
-        self.markon = PhotoImage(file='star_on.png')
-        self.markoff = PhotoImage(file='star_off.png')
+        self.markon = PhotoImage(file='icon/star_on.png')
+        self.markoff = PhotoImage(file='icon/star_off.png')
         self.markon = self.markon.subsample(9)
         self.markoff = self.markoff.subsample(10)
         # API키 깃허브 안올라가게 조심
@@ -36,7 +36,7 @@ class Information:
 
         self.GetXML()
         if self.detail['imageUrl'] == '':
-            im = Image.open('존재하지 않는 이미지.png')
+            im = Image.open('icon/존재하지 않는 이미지.png')
             photo = ImageTk.PhotoImage(im)
         else:
             with urllib.request.urlopen(self.detail['imageUrl']) as u:

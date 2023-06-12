@@ -3,9 +3,6 @@ from tkinter import *
 from tkinter import font
 from tkinter import ttk
 import xml.etree.ElementTree as ET
-from PIL import Image, ImageTk
-import urllib.request
-from io import BytesIO
 import requests
 import information
 
