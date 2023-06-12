@@ -120,6 +120,7 @@ class Information:
             for bookmark in bookmarks:
                 if self.detail['contentid'] in bookmark:
                     bookmarks.pop(bookmarks.index(bookmark))
+            spam.fileOut(bookmarks)
     def googlemap(self):    # API키 깃허브 안올라가게 조심
         self.map_url = f"https://maps.googleapis.com/maps/api/staticmap?center={self.detail['mapy']},{self.detail['mapx']}&zoom={self.zoom}&size=400x400&maptype=roadmap"
         mapy, mapx = self.detail['mapy'], self.detail['mapx']
